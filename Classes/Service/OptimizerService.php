@@ -50,7 +50,7 @@ class OptimizerService
      * @throws \Neos\Eel\Exception
      * @throws \RuntimeException
      */
-    public function optimize($stream, string $filename, string $resourceCollectionName, OptimizerConfiguration $optimizationConfiguration)
+    public function optimize($stream, string $filename, string $resourceCollectionName, OptimizerConfiguration $optimizationConfiguration): PersistentResource
     {
         $extension = pathinfo($filename, PATHINFO_EXTENSION);
         $outFileExtension = $optimizationConfiguration->getOutFileExtension() !== '' ? $optimizationConfiguration->getOutFileExtension() : $extension;

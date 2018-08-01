@@ -61,7 +61,7 @@ class OptimizedResourceRelation
      * @param string $filename
      * @return string
      */
-    public static function createOriginalResourceIdentificationHash($sha1, $filename)
+    public static function createOriginalResourceIdentificationHash($sha1, $filename): string
     {
         return hash('sha256', $sha1 . $filename);
     }

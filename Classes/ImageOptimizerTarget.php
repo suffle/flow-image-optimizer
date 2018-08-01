@@ -248,9 +248,10 @@ class ImageOptimizerTarget implements TargetInterface
      * @param string $filename
      * @return bool
      */
-    protected function isOptimized(string $sha1, string $filename)
+    protected function isOptimized(string $sha1, string $filename): bool
     {
         $optimized = $this->getOptimizedBySha1AndFilename($sha1, $filename);
+
         return !empty($optimized);
     }
 
@@ -270,7 +271,7 @@ class ImageOptimizerTarget implements TargetInterface
      * @param array $rawOptions
      * @return array
      */
-    protected function prepareOptimizerConfigurations(array $rawOptions)
+    protected function prepareOptimizerConfigurations(array $rawOptions): array
     {
         $result = [];
         foreach ($rawOptions as $mediaType => $options) {

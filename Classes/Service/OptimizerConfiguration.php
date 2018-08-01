@@ -96,7 +96,7 @@ class OptimizerConfiguration
      * @return string
      * @throws \Neos\Eel\Exception
      */
-    public function getPreparedCommandString(array $contextVariables)
+    public function getPreparedCommandString(array $contextVariables): string
     {
         return $this->getBinaryPath() . ' ' . $this->getArguments($contextVariables);
     }
