@@ -1,0 +1,45 @@
+# Example configuration:
+Neos:
+  Flow:
+    resource:
+      storages:
+        optimizedImageStorage:
+          storage: 'Neos\Flow\ResourceManagement\Storage\WritableFileSystemStorage'
+          storageOptions:
+            path: '%FLOW_PATH_DATA%Persistent/Resources/Optimized/'
+      collections:
+        optimizedImageCollection:
+          storage: 'optimizedImageStorage'
+          target: 'localWebDirectoryPersistentResourcesTarget'
+        persistent:
+          target: 'imageOptimizingTarget'
+      targets:
+        imageOptimizingTarget:
+          target: 'Flownative\ImageOptimizer\ImageOptimizerTarget'
+          targetOptions:
+            mediaTypes:
+              # Example for jpeg optimization, make sure the binaryPath works on your system(s).
+              # "optimizedPath" will be replaced with a temporary path from which the optimized file is read, "originalPath" is replaced by a temporary path with the original file.
+              'image/jpeg':
+                binaryPath: '/usr/local/bin/jpegtran'
+                arguments: "${'-copy none -optimize -progressive ' + '-outfile ' + optimizedPath + ' ' + originalPath}"
+            # See collection configuration above, we need a separate collection for the optimized images.
+            optimizedCollection: 'optimizedImageCollection'
+            # the following is basically a copy of the default persistent target configuration of Flow, this is where you would configure your actual target you want to use.
+            targetClass: 'Neos\Flow\ResourceManagement\Target\FileSystemSymlinkTarget'
+            targetOptions:
+              path: '%FLOW_PATH_WEB%_Resources/Persistent/'
+              baseUri: '_Resources/Persistent/'
+              extensionBlacklist:
+                'aspx': TRUE
+                'cgi': TRUE
+                'php3': TRUE
+                'php4': TRUE
+                'php5': TRUE
+                'phtml': TRUE
+                'php': TRUE
+                'pl': TRUE
+                'py': TRUE
+                'pyc': TRUE
+                'pyo': TRUE
+                'rb': TRUE
