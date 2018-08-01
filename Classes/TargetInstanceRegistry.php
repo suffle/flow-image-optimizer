@@ -1,6 +1,16 @@
 <?php
 namespace Flownative\ImageOptimizer;
 
+/**
+ * This file is part of the Flownative.ImageOptimizer package.
+ *
+ * (c) 2018 Christian Müller, Flownative GmbH
+ *
+ * This package is Open Source Software. For the full copyright and license
+ * information, please view the LICENSE file which was distributed with this
+ * source code.
+ */
+
 use Neos\Flow\Annotations as Flow;
 
 /**
@@ -15,6 +25,7 @@ class TargetInstanceRegistry
 
     /**
      * @param ImageOptimizerTarget $target
+     * @return void
      */
     public function register(ImageOptimizerTarget $target)
     {

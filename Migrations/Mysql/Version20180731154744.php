@@ -5,7 +5,7 @@ use Doctrine\DBAL\Migrations\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
 
 /**
- * Add relation table.
+ * Add relation table for optimized resources.
  */
 class Version20180731154744 extends AbstractMigration
 {
@@ -15,12 +15,14 @@ class Version20180731154744 extends AbstractMigration
      */
     public function getDescription()
     {
-        return '';
+        return 'Add relation table for optimized resources.';
     }
 
     /**
      * @param Schema $schema
      * @return void
+     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Migrations\AbortMigrationException
      */
     public function up(Schema $schema)
     {
@@ -33,6 +35,8 @@ class Version20180731154744 extends AbstractMigration
     /**
      * @param Schema $schema
      * @return void
+     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Migrations\AbortMigrationException
      */
     public function down(Schema $schema)
     {
