@@ -48,6 +48,7 @@ class OptimizerService
      * @return PersistentResource
      * @throws \Neos\Flow\ResourceManagement\Exception
      * @throws \Neos\Eel\Exception
+     * @throws \RuntimeException
      */
     public function optimize($stream, string $filename, string $resourceCollectionName, OptimizerConfiguration $optimizationConfiguration)
     {
@@ -65,7 +66,7 @@ class OptimizerService
 
         if (!file_exists($optimizedTemporaryPathAndFilename)) {
             Files::unlink($originalTemporaryPathAndFilename);
-            throw new \Exception('Optimization not successful with exit status ' . $result . ' and the following output: ' . $output);
+            throw new \RuntimeException('Optimization not successful with exit status ' . $result . ' and the following output: ' . $output);
         }
 
         $bestResultPathAndFilename = (filesize($originalTemporaryPathAndFilename) <= filesize($optimizedTemporaryPathAndFilename)) ? $originalTemporaryPathAndFilename : $optimizedTemporaryPathAndFilename;
