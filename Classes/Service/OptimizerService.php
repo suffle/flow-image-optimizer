@@ -1,7 +1,18 @@
 <?php
 namespace Flownative\ImageOptimizer\Service;
 
+/**
+ * This file is part of the Flownative.ImageOptimizer package.
+ *
+ * (c) 2018 Christian Müller, Flownative GmbH
+ *
+ * This package is Open Source Software. For the full copyright and license
+ * information, please view the LICENSE file which was distributed with this
+ * source code.
+ */
+
 use Neos\Flow\Annotations as Flow;
+use Neos\Flow\ResourceManagement\PersistentResource;
 use Neos\Flow\ResourceManagement\ResourceManager;
 use Neos\Flow\Utility\Algorithms;
 use Neos\Flow\Utility\Environment;
@@ -34,27 +45,28 @@ class OptimizerService
      * @param string $filename
      * @param string $resourceCollectionName
      * @param OptimizerConfiguration $optimizationConfiguration
-     * @return \Neos\Flow\ResourceManagement\PersistentResource
+     * @return PersistentResource
      * @throws \Neos\Flow\ResourceManagement\Exception
      * @throws \Neos\Eel\Exception
+     * @throws \RuntimeException
      */
-    public function optimize($stream, string $filename, string $resourceCollectionName, OptimizerConfiguration $optimizationConfiguration)
+    public function optimize($stream, string $filename, string $resourceCollectionName, OptimizerConfiguration $optimizationConfiguration): PersistentResource
     {
-        $xtension = pathinfo($filename, PATHINFO_EXTENSION);
-        $outFileExtension = $optimizationConfiguration->getOutFileExtension() !== '' ? $optimizationConfiguration->getOutFileExtension() : $xtension;
-        $originalTemporaryPathAndFilename = $this->generateTemporaryPathAndFilename('OptimizerOriginal-' . Algorithms::generateRandomString(13), $xtension);
-        $optimizedTemporaryPathAndFilename = $this->generateTemporaryPathAndFilename(pathinfo($filename, PATHINFO_FILENAME) . 'Optim',  $outFileExtension);
+        $extension = pathinfo($filename, PATHINFO_EXTENSION);
+        $outFileExtension = $optimizationConfiguration->getOutFileExtension() !== '' ? $optimizationConfiguration->getOutFileExtension() : $extension;
+        $originalTemporaryPathAndFilename = $this->generateTemporaryPathAndFilename('OptimizerOriginal-' . Algorithms::generateRandomString(13), $extension);
+        $optimizedTemporaryPathAndFilename = $this->generateTemporaryPathAndFilename(pathinfo($filename, PATHINFO_FILENAME) . 'Optim', $outFileExtension);
 
         $originalTemporaryStream = fopen($originalTemporaryPathAndFilename, 'w+');
         stream_copy_to_stream($stream, $originalTemporaryStream);
         fclose($originalTemporaryStream);
 
-        $commandString = $optimizationConfiguration->getPreparedCommandString(['originalPath' =>escapeshellarg($originalTemporaryPathAndFilename), 'optimizedPath' => escapeshellarg($optimizedTemporaryPathAndFilename)]);
+        $commandString = $optimizationConfiguration->getPreparedCommandString(['originalPath' => escapeshellarg($originalTemporaryPathAndFilename), 'optimizedPath' => escapeshellarg($optimizedTemporaryPathAndFilename)]);
         exec($commandString, $output, $result);
 
         if (!file_exists($optimizedTemporaryPathAndFilename)) {
             Files::unlink($originalTemporaryPathAndFilename);
-            throw new \Exception('Optimization not successful with exit status ' . $result . ' and the following output: ' . $output);
+            throw new \RuntimeException('Optimization not successful with exit status ' . $result . ' and the following output: ' . $output);
         }
 
         $bestResultPathAndFilename = (filesize($originalTemporaryPathAndFilename) <= filesize($optimizedTemporaryPathAndFilename)) ? $originalTemporaryPathAndFilename : $optimizedTemporaryPathAndFilename;

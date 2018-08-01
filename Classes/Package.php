@@ -1,8 +1,17 @@
 <?php
 namespace Flownative\ImageOptimizer;
 
+/**
+ * This file is part of the Flownative.ImageOptimizer package.
+ *
+ * (c) 2018 Christian Müller, Flownative GmbH
+ *
+ * This package is Open Source Software. For the full copyright and license
+ * information, please view the LICENSE file which was distributed with this
+ * source code.
+ */
+
 use Neos\Flow\Core\Bootstrap;
-use Neos\Flow\Persistence\PersistenceManagerInterface;
 use Neos\Flow\SignalSlot\Dispatcher;
 
 /**
@@ -10,12 +19,15 @@ use Neos\Flow\SignalSlot\Dispatcher;
  */
 class Package extends \Neos\Flow\Package\Package
 {
-
     /**
      * Persist changes to our optimizer target.
      *
-     * @param Core\Bootstrap $bootstrap The current bootstrap
+     * Resources are published using postPersist, so any new resources that are created in this target are
+     * created after flushing changes. Thus we need to persist them here on our own.
+     *
+     * @param Bootstrap $bootstrap The current bootstrap
      * @return void
+     * @throws \Neos\Flow\Exception
      */
     public function boot(Bootstrap $bootstrap)
     {

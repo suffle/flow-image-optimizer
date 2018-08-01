@@ -1,9 +1,19 @@
 <?php
 namespace Flownative\ImageOptimizer\Service;
 
+/**
+ * This file is part of the Flownative.ImageOptimizer package.
+ *
+ * (c) 2018 Christian Müller, Flownative GmbH
+ *
+ * This package is Open Source Software. For the full copyright and license
+ * information, please view the LICENSE file which was distributed with this
+ * source code.
+ */
+
+use Neos\Eel\CompilingEvaluator;
 use Neos\Eel\Utility;
 use Neos\Flow\Annotations as Flow;
-use Neos\Eel\CompilingEvaluator;
 
 /**
  * A plain object to hold configuration for a specific optimizer.
@@ -86,7 +96,7 @@ class OptimizerConfiguration
      * @return string
      * @throws \Neos\Eel\Exception
      */
-    public function getPreparedCommandString(array $contextVariables)
+    public function getPreparedCommandString(array $contextVariables): string
     {
         return $this->getBinaryPath() . ' ' . $this->getArguments($contextVariables);
     }
