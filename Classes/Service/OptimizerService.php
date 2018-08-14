@@ -66,7 +66,7 @@ class OptimizerService
 
         if (!file_exists($optimizedTemporaryPathAndFilename)) {
             Files::unlink($originalTemporaryPathAndFilename);
-            throw new \RuntimeException('Optimization not successful with exit status ' . $result . ' and the following output: ' . $output);
+            throw new \RuntimeException('Optimization not successful with exit status ' . $result . ' and the following output: ' . implode(chr(10), $output));
         }
 
         $bestResultPathAndFilename = (filesize($originalTemporaryPathAndFilename) <= filesize($optimizedTemporaryPathAndFilename)) ? $originalTemporaryPathAndFilename : $optimizedTemporaryPathAndFilename;
