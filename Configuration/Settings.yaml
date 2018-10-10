@@ -1,0 +1,8 @@
+Neos:
+  Flow:
+    persistence:
+      doctrine:
+        eventListeners:
+          'Flownative\ImageOptimizer\Doctrine\ResourceRemovalListener':
+            events: ['preRemove']
+            listener: 'Flownative\ImageOptimizer\Doctrine\ResourceRemovalListener'
