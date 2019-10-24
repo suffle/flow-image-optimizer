@@ -54,10 +54,11 @@ class OptimizerService
     {
         $extension = pathinfo($filename, PATHINFO_EXTENSION);
         $outFileExtension = $optimizationConfiguration->getOutFileExtension() !== '' ? $optimizationConfiguration->getOutFileExtension() : $extension;
-        $originalTemporaryPathAndFilename = $this->generateTemporaryPathAndFilename('OptimizerOriginal-' . Algorithms::generateRandomString(13), $extension);
-        $optimizedTemporaryPathAndFilename = $this->generateTemporaryPathAndFilename(pathinfo($filename, PATHINFO_FILENAME) . 'Optim', $outFileExtension);
+        $randomString = Algorithms::generateRandomString(13);
+        $originalTemporaryPathAndFilename = $this->generateTemporaryPathAndFilename('OptimizerOriginal-' . $randomString, $extension);
+        $optimizedTemporaryPathAndFilename = $this->generateTemporaryPathAndFilename('OptimizerOptimized-' . $randomString, $outFileExtension);
 
-        $originalTemporaryStream = fopen($originalTemporaryPathAndFilename, 'w+');
+        $originalTemporaryStream = fopen($originalTemporaryPathAndFilename, 'wb+');
         stream_copy_to_stream($stream, $originalTemporaryStream);
         fclose($originalTemporaryStream);
 
