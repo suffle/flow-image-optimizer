@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Flownative\ImageOptimizer\Service;
 
 /**
@@ -12,6 +14,7 @@ namespace Flownative\ImageOptimizer\Service;
  */
 
 use Neos\Eel\CompilingEvaluator;
+use Neos\Eel\Exception as EelException;
 use Neos\Eel\Utility;
 use Neos\Flow\Annotations as Flow;
 
@@ -82,7 +85,7 @@ class OptimizerConfiguration
     /**
      * @param array $contextVariables
      * @return mixed
-     * @throws \Neos\Eel\Exception
+     * @throws EelException
      */
     protected function getArguments(array $contextVariables)
     {
@@ -94,7 +97,7 @@ class OptimizerConfiguration
      *
      * @param array $contextVariables
      * @return string
-     * @throws \Neos\Eel\Exception
+     * @throws EelException
      */
     public function getPreparedCommandString(array $contextVariables): string
     {

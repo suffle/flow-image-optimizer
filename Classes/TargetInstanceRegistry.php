@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Flownative\ImageOptimizer;
 
 /**
@@ -27,7 +29,7 @@ class TargetInstanceRegistry
      * @param ImageOptimizerTarget $target
      * @return void
      */
-    public function register(ImageOptimizerTarget $target)
+    public function register(ImageOptimizerTarget $target): void
     {
         $this->targetInstances[] = $target;
     }

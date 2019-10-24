@@ -1,10 +1,13 @@
 <?php
+declare(strict_types=1);
+
 namespace Flownative\ImageOptimizer\Doctrine;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Flownative\ImageOptimizer\Domain\Model\OptimizedResourceRelation;
 use Flownative\ImageOptimizer\Domain\Repository\OptimizedResourceRelationRepository;
 use Neos\Flow\Annotations as Flow;
+use Neos\Flow\Persistence\Exception\IllegalObjectTypeException;
 use Neos\Flow\ResourceManagement\PersistentResource;
 
 /**
@@ -25,9 +28,9 @@ class ResourceRemovalListener
 
     /**
      * @param LifecycleEventArgs $event
-     * @throws \Neos\Flow\Persistence\Exception\IllegalObjectTypeException
+     * @throws IllegalObjectTypeException
      */
-    public function preRemove(LifecycleEventArgs $event)
+    public function preRemove(LifecycleEventArgs $event): void
     {
         $entity = $event->getEntity();
         if (!$entity instanceof PersistentResource) {

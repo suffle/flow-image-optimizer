@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Flownative\ImageOptimizer\Domain\Repository;
 
 /**
@@ -19,5 +21,4 @@ use Neos\Flow\Persistence\Doctrine\Repository;
  */
 class OptimizedResourceRelationRepository extends Repository
 {
-
 }

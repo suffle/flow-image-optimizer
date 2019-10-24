@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Flownative\ImageOptimizer\Service;
 
 /**
@@ -11,7 +13,9 @@ namespace Flownative\ImageOptimizer\Service;
  * source code.
  */
 
+use Neos\Eel\Exception as EelException;
 use Neos\Flow\Annotations as Flow;
+use Neos\Flow\ResourceManagement\Exception as ResourceManagementException;
 use Neos\Flow\ResourceManagement\PersistentResource;
 use Neos\Flow\ResourceManagement\ResourceManager;
 use Neos\Flow\Utility\Algorithms;
@@ -46,8 +50,8 @@ class OptimizerService
      * @param string $resourceCollectionName
      * @param OptimizerConfiguration $optimizationConfiguration
      * @return PersistentResource
-     * @throws \Neos\Flow\ResourceManagement\Exception
-     * @throws \Neos\Eel\Exception
+     * @throws ResourceManagementException
+     * @throws EelException
      * @throws \RuntimeException
      */
     public function optimize($stream, string $filename, string $resourceCollectionName, OptimizerConfiguration $optimizationConfiguration): PersistentResource
