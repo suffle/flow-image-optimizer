@@ -31,15 +31,15 @@ Neos:
               path: '%FLOW_PATH_WEB%_Resources/Persistent/'
               baseUri: '_Resources/Persistent/'
               extensionBlacklist:
-                'aspx': TRUE
-                'cgi': TRUE
-                'php3': TRUE
-                'php4': TRUE
-                'php5': TRUE
-                'phtml': TRUE
-                'php': TRUE
-                'pl': TRUE
-                'py': TRUE
-                'pyc': TRUE
-                'pyo': TRUE
-                'rb': TRUE
+                'aspx': true
+                'cgi': true
+                'php3': true
+                'php4': true
+                'php5': true
+                'phtml': true
+                'php': true
+                'pl': true
+                'py': true
+                'pyc': true
+                'pyo': true
+                'rb': true
