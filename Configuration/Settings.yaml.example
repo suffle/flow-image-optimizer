@@ -18,11 +18,20 @@ Neos:
           target: 'Flownative\ImageOptimizer\ImageOptimizerTarget'
           targetOptions:
             mediaTypes:
-              # Example for jpeg optimization, make sure the binaryPath works on your system(s).
-              # "optimizedPath" will be replaced with a temporary path from which the optimized file is read, "originalPath" is replaced by a temporary path with the original file.
+              # "optimizedPath" will be replaced with a temporary path from which the optimized file is read,
+              # "originalPath" is replaced by a temporary path with the original file.
               'image/jpeg':
-                binaryPath: '/usr/local/bin/jpegtran'
+                binaryPath: '/usr/bin/jpegtran'
                 arguments: "${'-copy none -optimize -progressive ' + '-outfile ' + optimizedPath + ' ' + originalPath}"
+              'image/png':
+                binaryPath: '/usr/bin/optipng'
+                arguments: "${'-o2 -strip all -out ' + optimizedPath + ' ' + originalPath}"
+              'image/gif':
+                binaryPath: '/usr/bin/gifsicle'
+                arguments: "${'-O' + optimizationLevel + ' --output ' + optimizedPath + ' ' + originalPath}"
+              'image/svg+xml':
+                binaryPath: '/usr/bin/svgo'
+                arguments: "${'--input ' + originalPath + ' --output ' + optimizedPath}"
             # See collection configuration above, we need a separate collection for the optimized images.
             optimizedCollection: 'optimizedImageCollection'
             # the following is basically a copy of the default persistent target configuration of Flow, this is where you would configure your actual target you want to use.
