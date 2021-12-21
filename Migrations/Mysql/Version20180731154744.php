@@ -5,7 +5,7 @@ namespace Neos\Flow\Persistence\Doctrine\Migrations;
 
 use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\Migrations\AbortMigrationException;
-use Doctrine\DBAL\Migrations\AbstractMigration;
+use Doctrine\Migrations\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
 
 /**
@@ -17,7 +17,7 @@ class Version20180731154744 extends AbstractMigration
     /**
      * @return string
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'Add relation table for optimized resources.';
     }
@@ -28,7 +28,7 @@ class Version20180731154744 extends AbstractMigration
      * @throws DBALException
      * @throws AbortMigrationException
      */
-    public function up(Schema $schema)
+    public function up(Schema $schema): void
     {
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on "mysql".');
 
@@ -42,7 +42,7 @@ class Version20180731154744 extends AbstractMigration
      * @throws DBALException
      * @throws AbortMigrationException
      */
-    public function down(Schema $schema)
+    public function down(Schema $schema): void
     {
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on "mysql".');
 
